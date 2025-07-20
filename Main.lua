@@ -129,11 +129,11 @@ G2L["Execute_9"].MouseButton1Click:Connect(
             local success, err =
                 pcall(
                 function()
-                    local f = loadstring(code)
+                    local f, loadErr = loadstring(code)
                     if f then
                         f()
                     else
-                        warn("Loadstring error: " .. tostring(err))
+                        warn("Loadstring error: " .. tostring(loadErr))
                     end
                 end
             )
